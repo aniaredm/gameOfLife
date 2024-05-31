@@ -43,14 +43,11 @@ namespace TheGameOfLife.Views
 
             if (!string.IsNullOrEmpty(filePath) && System.IO.File.Exists(filePath))
             {
-                // Read and process the data from the selected file to initialize the game board
                 LoadGameFromFile(filePath);
             }
             else
             {
-                // Handle the case where the file path is not valid
                 MessageBox.Show("Selected file is not valid.");
-                // You can decide how to handle this situation, e.g., close the window or show an error message.
             }
         }
 
@@ -71,10 +68,8 @@ namespace TheGameOfLife.Views
                         {
                             UndoNextState.IsEnabled = true;
                         }
-                        // Initialize the game board with the loaded rows and columns
                         InitializeGameBoard();
 
-                        // Start from line 2 (after rows and columns)
                         int lineIndex = 2;
 
                         if (lines.Length >= lineIndex + Rows)
@@ -92,13 +87,11 @@ namespace TheGameOfLife.Views
                                 }
                                 else
                                 {
-                                    // Handle a format error in the file
                                     MessageBox.Show("Invalid format in the loaded file.");
                                     return;
                                 }
                             }
 
-                            // Now, you can read cellDied and cellBorn
                             if (lines.Length > lineIndex)
                             {
                                 cellsDiedNumber = int.Parse(lines[lineIndex]);
@@ -107,17 +100,14 @@ namespace TheGameOfLife.Views
                                 lineIndex++;
                                 CellsDiedLabel.Content = cellsDiedNumber;
                                 CellsBornLabel.Content = cellsBornNumber;
-                                // Do something with cellsDied and cellsBorn
                             }
                             else
                             {
-                                // Handle missing data in the file
                                 MessageBox.Show("Not enough data in the loaded file.");
                             }
                             Stack<GameState> reversedStack = new Stack<GameState>();
                             while (lineIndex + Rows + 2 <= lines.Length)
                             {
-                                // Create a new GameState to store the cell states and statistics
                                 GameState gameState = new GameState(new bool[Rows, Columns], 0, 0);
 
                                 for (int row = 0; row < Rows; row++)
@@ -132,20 +122,17 @@ namespace TheGameOfLife.Views
                                     }
                                     else
                                     {
-                                        // Handle a format error in the file
                                         MessageBox.Show("Invalid format in the loaded file.");
                                         return;
                                     }
                                 }
 
-                                // Read cellsDied and cellsBorn
                                 gameState.CellsDiedNumber = int.Parse(lines[lineIndex]);
                                 gameState.CellsBornNumber = int.Parse(lines[lineIndex + 1]);
 
-                                // Push the GameState onto the gameHistory stack in the correct order
                                 reversedStack.Push(gameState);
 
-                                lineIndex += 2; // Move to the next round's data
+                                lineIndex += 2; 
                             }
 
                             while (reversedStack.Count > 0)
@@ -155,25 +142,21 @@ namespace TheGameOfLife.Views
                         }
                         else
                         {
-                            // Handle insufficient data in the file
                             MessageBox.Show("Not enough data in the loaded file.");
                         }
                     }
                     else
                     {
-                        // Handle invalid row and column values
                         MessageBox.Show("Invalid row and column values in the loaded file.");
                     }
                 }
                 else
                 {
-                    // Handle insufficient data in the file
                     MessageBox.Show("Not enough data in the loaded file.");
                 }
             }
             catch (Exception ex)
             {
-                // Handle any file reading or parsing errors
                 MessageBox.Show("Error loading the game from file: " + ex.Message);
             }
         }
@@ -183,17 +166,16 @@ namespace TheGameOfLife.Views
             cells = new Rectangle[Rows, Columns];
             cellStates = new bool[Rows, Columns];
 
-            // Create and initialize the cells on the Canvas
             for (int row = 0; row < Rows; row++)
             {
                 for (int col = 0; col < Columns; col++)
                 {
                     var cell = new Rectangle
                     {
-                        Width = 20, // Adjust as needed
-                        Height = 20, // Adjust as needed
-                        Fill = Brushes.White, // Initial color
-                        Stroke = Brushes.Black // Border color
+                        Width = 20, 
+                        Height = 20, 
+                        Fill = Brushes.White, 
+                        Stroke = Brushes.Black 
                     };
 
                     Canvas.SetLeft(cell, col * 20);
@@ -443,15 +425,16 @@ namespace TheGameOfLife.Views
         {
             string currentDirectory = System.IO.Directory.GetCurrentDirectory();
             string goalDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(currentDirectory).FullName).FullName).FullName;
-            // Specify the path to the "SavedGames" folder within your project directory
             string savedGamesFolderPath = System.IO.Path.Combine(goalDirectory, "SavedGames");
 
+            if (!System.IO.Directory.Exists(savedGamesFolderPath))
+            {
+                System.IO.Directory.CreateDirectory(savedGamesFolderPath);
+            }
 
-            // Generate a unique file name using a timestamp
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             string fileName = "TheGameOfLifeSave_" + timestamp + ".txt";
 
-            // Combine the folder path and file name to get the full file path
             string filePath = System.IO.Path.Combine(savedGamesFolderPath, fileName);
 
             try
@@ -461,20 +444,18 @@ namespace TheGameOfLife.Views
                     file.WriteLine(Rows);
                     file.WriteLine(Columns);
 
-                    // Save the current cells
                     for (int row = 0; row < Rows; row++)
                     {
                         for (int col = 0; col < Columns; col++)
                         {
                             file.Write(cellStates[row, col] ? "1" : "0");
                         }
-                        file.WriteLine(); // Newline at the end of each row
+                        file.WriteLine(); 
                     }
 
                     file.WriteLine(cellsDiedNumber);
                     file.WriteLine(cellsBornNumber);
 
-                    // Save the game state
                     foreach (GameState gameState in gameHistory)
                     {
                         for (int row = 0; row < Rows; row++)
@@ -483,10 +464,9 @@ namespace TheGameOfLife.Views
                             {
                                 file.Write(gameState.CellStates[row, col] ? "1" : "0");
                             }
-                            file.WriteLine(); // Newline at the end of each row
+                            file.WriteLine(); 
                         }
 
-                        // Save the number of cells that died and cells that were born
                         file.WriteLine(gameState.CellsDiedNumber);
                         file.WriteLine(gameState.CellsBornNumber);
                     }
@@ -526,10 +506,8 @@ namespace TheGameOfLife.Views
                 cellsBornNumber = 0;
             }
 
-            // Clear the game history stack
             gameHistory.Clear();
 
-            // Update the labels
             GenerationLabel.Content = "1";
             CellsDiedLabel.Content = cellsDiedNumber.ToString();
             CellsBornLabel.Content = cellsBornNumber.ToString();

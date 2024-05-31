@@ -18,9 +18,6 @@ using System.IO;
 
 namespace TheGameOfLife
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private string selectedFilePath;
@@ -35,19 +32,16 @@ namespace TheGameOfLife
 
             if (int.TryParse(BoardRows.Text, out rows) && int.TryParse(BoardCols.Text, out cols) && rows > 0 && cols > 0)
             {
-                // Input is valid, create and show the GameWindow
                 GameWindow gameWindow = new GameWindow(rows, cols);
                 gameWindow.Show();
                 Close();
             }
             else
             {
-                // Input is not valid, show an error message
                 MessageBoxResult result = MessageBox.Show("Please enter valid integer values for rows and columns.", "Invalid Input", MessageBoxButton.OK);
 
                 if (result == MessageBoxResult.OK)
                 {
-                    // Clear the TextBoxes or take other appropriate action to re-enter values
                     BoardRows.Text = string.Empty;
                     BoardCols.Text = string.Empty;
                     BoardRows.Focus();
@@ -87,7 +81,6 @@ namespace TheGameOfLife
         {
             if (!string.IsNullOrEmpty(selectedFilePath))
             {
-                // Open the GameWindow and pass the selected file path as a parameter
                 GameWindow gameWindow = new GameWindow(selectedFilePath);
                 gameWindow.Show();
                 Close();

@@ -15,9 +15,6 @@ using System.IO;
 
 namespace TheGameOfLife.Views
 {
-    /// <summary>
-    /// Logika interakcji dla klasy ChooseShape.xaml
-    /// </summary>
     public partial class ChooseShape : Window
     {
         public ChooseShape()

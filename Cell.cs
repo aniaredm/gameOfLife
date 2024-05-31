@@ -17,25 +17,22 @@ namespace TheGameOfLife
         {
             Row = row;
             Column = column;
-            IsAlive = false; // Initialize IsAlive to false by default
+            IsAlive = false;
 
-            // Create the underlying Rectangle
             CellContainer = new Border
             {
-                Width = 20, // Adjust as needed
-                Height = 20, // Adjust as needed
-                BorderBrush = Brushes.Black, // Border color
-                Background = Brushes.White, // Initial color
-                Child = new Rectangle() // Actual cell content
+                Width = 20, 
+                Height = 20, 
+                BorderBrush = Brushes.Black, 
+                Background = Brushes.White, 
+                Child = new Rectangle() 
             };
 
-            // Attach any event handlers here, if needed
         }
 
         public void ToggleState()
         {
             IsAlive = !IsAlive;
-            // Update the appearance of the Rectangle to reflect the new state.
             CellContainer.Background = IsAlive ? Brushes.Black : Brushes.White;
         }
     }
