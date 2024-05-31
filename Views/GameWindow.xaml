@@ -1,0 +1,73 @@
+﻿<Window x:Class="TheGameOfLife.Views.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheGameOfLife.Views"
+        mc:Ignorable="d"
+        Title="GameWindow" Height="800" Width="1400">
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Grid>
+                <Border Background="LightGray">
+                    <AdornerDecorator>
+                        <ContentPresenter />
+                    </AdornerDecorator>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+    </Window.Template>
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Olive" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="Width" Value="130" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="10" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Padding="0,10,0,0">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,0,10" Background="AntiqueWhite">
+                <Button  x:Name="Autoplay" Content="Autoplay" Style="{StaticResource ButtonStyle}" Click="Autoplay_Click"/>
+                <Button  x:Name="AutoplayStop" Content="Autoplay Stop" Style="{StaticResource ButtonStyle}" Click="AutoplayStop_Click" Visibility="Collapsed"/>
+                <Button  x:Name="NextState" Content="Next State" Style="{StaticResource ButtonStyle}" Click="NextState_Click" />
+                <Button  x:Name="UndoNextState" Content="Undo State" Style="{StaticResource ButtonStyle}" Click="UndoNextState_Click" IsEnabled="False"/>
+                <Button  x:Name="BornCells" Content="Show Born Cells" Style="{StaticResource ButtonStyle}" Click="ShowBornCells_Click" IsEnabled="False"/>
+                <Button  x:Name="HideBornCells" Content="Hide Born Cells" Style="{StaticResource ButtonStyle}" Click="HideBornCells_Click" Visibility="Collapsed"/>
+                <Button  x:Name="DeadCells" Content="Show Dead Cells" Style="{StaticResource ButtonStyle}" Click="ShowDeadCells_Click" IsEnabled="False"/>
+                <Button  x:Name="HideDeadCells" Content="Hide Dead Cells" Style="{StaticResource ButtonStyle}" Click="HideDeadCells_Click" Visibility="Collapsed"/>
+                <Button  x:Name="SaveToFile" Content="Save To File" Style="{StaticResource ButtonStyle}" Click="SaveToFile_Click"/>
+                <Button  x:Name="RestartGame" Content="Restart Game" Style="{StaticResource ButtonStyle}" Click="RestartGame_Click" IsEnabled="False"/>
+                <Button  x:Name="GoBack" Content="Go back to main page" Style="{StaticResource ButtonStyle}" Click="GoBack_Click" Width="200" Background="Gray"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,10,0,10" >
+            <Canvas x:Name="GameBoard" HorizontalAlignment="Left" Margin="40,10,0,10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0" Background="AntiqueWhite">
+            <TextBlock Grid.Row="3" Text="STATISTICS" FontSize="17" HorizontalAlignment="Center" Margin="40, 0, 0, 5" Visibility="Visible"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5,0,10" Background="AntiqueWhite">
+            <TextBlock Text="Generations: " FontSize="16" VerticalAlignment="Center" Margin="40,0,10,0" />
+            <Label x:Name="GenerationLabel" Content="1" FontSize="16" VerticalAlignment="Center" Margin="0,0,40,0" />
+            <TextBlock Text="Cells Dead: " FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <Label x:Name="CellsDiedLabel" Content="0" FontSize="16" VerticalAlignment="Center" Margin="0,0,40,0" />
+            <TextBlock Text="Cells Born: " FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <Label x:Name="CellsBornLabel" Content="0" FontSize="16" VerticalAlignment="Center" Margin="0,0,40,0" />
+        </StackPanel>
+    </Grid>
+</Window>

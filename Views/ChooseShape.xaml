@@ -1,0 +1,47 @@
+﻿<Window x:Class="TheGameOfLife.Views.ChooseShape"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheGameOfLife.Views"
+        mc:Ignorable="d"
+        Title="ChooseShape" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Olive" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="115" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="10" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Choose the shape that you want to start the game with" FontSize="24" HorizontalAlignment="Center"/>
+            <Border Margin="0,20,0,0" Padding="0,5,0,0" Background="LightGray" Width="700">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Content="Crocodile" Style="{StaticResource ButtonStyle}" Click="Crocodile_Click" />
+                    <Button Content="Fountain" Style="{StaticResource ButtonStyle}" Click="Fountain_Click" />
+                    <Button Content="Frog" Style="{StaticResource ButtonStyle}" Click="Frog_Click" />
+                </StackPanel>
+            </Border>
+            <Border Background="LightGray" Width="700">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Content="Glider" Style="{StaticResource ButtonStyle}" Click="Glider_Click" />
+                    <Button Content="Dakota" Style="{StaticResource ButtonStyle}" Click="Dakota_Click" />
+                </StackPanel>
+            </Border>
+            <Border Margin="0,20,0,0" Padding="0,5,0,5" Background="LightGray" >
+                <Button Content="Go back to main page" Width="200" Style="{StaticResource ButtonStyle}" Click="GoBack_Click" />
+            </Border>
+        </StackPanel>
+    </Grid>
+    
+</Window>
